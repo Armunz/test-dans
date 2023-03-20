@@ -25,12 +25,14 @@ func (a *authUsecase) AuthenticateUser(ctx context.Context, username string, pas
 	// when user not found, return early with error
 	if loginUser == (model.UserLogin{}) {
 		err = fmt.Errorf("user doesn't exist")
+		log.Println("[error] user not found in db, ", err)
 		return
 	}
 
 	valid := passHelper.CheckPasswordHash(loginUser.Password, password)
 	if !valid {
 		err = fmt.Errorf("wrong password")
+		log.Println("[error] failed to check password hash, ", err)
 		return
 	}
 
@@ -61,8 +63,6 @@ func (a *authUsecase) InsertUser(ctx context.Context, username string, password 
 	if err != nil {
 		log.Println("[error] failed to generate hash password, ", err)
 	}
-
-	log.Println("[DEBUG] Hash Password: ", hashPassword)
 
 	err = a.authRepo.SetUser(ctx, username, hashPassword)
 	if err != nil {

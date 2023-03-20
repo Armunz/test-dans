@@ -3,7 +3,6 @@ package mysql
 import (
 	"context"
 	"database/sql"
-	"log"
 	"time"
 
 	"test-dans/model"
@@ -19,7 +18,6 @@ func (m *mysqlUserRepo) GetUser(ctx context.Context, username string) (result mo
 	}
 
 	statement := `SELECT username, password FROM ` + m.tableName + ` WHERE username = ?`
-	log.Println("[DEBUG] Statement: ", statement)
 	err = m.conn.QueryRow(statement, username).Scan(&result.Username, &result.Password)
 
 	// no need to return error when user not found

@@ -3,6 +3,7 @@ package http
 import (
 	"context"
 	"encoding/json"
+	"log"
 	"net/http"
 	"test-dans/model"
 	"time"
@@ -57,6 +58,7 @@ func (h *httpDelivery) Login(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte(err.Error()))
 			return
 		}
+		log.Println("[error] failed to authenticate user, ", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -70,8 +72,9 @@ func (h *httpDelivery) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(h.jwtSecretKey)
+	tokenString, err := token.SignedString([]byte(h.jwtSecretKey))
 	if err != nil {
+		log.Println("[error] failed to signed jwt, ", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

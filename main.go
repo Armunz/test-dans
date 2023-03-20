@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -42,6 +43,7 @@ func main() {
 
 	router := newRouter(deliveryHTTP)
 
+	log.Println("Serve at port 9999")
 	http.ListenAndServe(":9999", router)
 
 }
