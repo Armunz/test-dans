@@ -1,0 +1,18 @@
+{
+    "mysql": {
+        "url": "127.0.0.1:3306",
+        "username": "root",
+        "password": "Satu2Tiga4!",
+        "db_name": "users",
+        "table_name": "user_data",
+        "timeout_ms": 500
+    },
+    "dans_endpoint": {
+        "url": "http://dev3.dansmultipro.co.id/api/recruitment/positions.json",
+        "timeout_ms": 500
+    },
+    "http_server": {
+        "timeout_ms": 1000
+    },
+    "jwt_key": "test_dans_dwi"
+}

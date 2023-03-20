@@ -1,0 +1,18 @@
+{
+    "mysql": {
+        "url": "",
+        "username": "",
+        "password": "",
+        "db_name": "",
+        "table_name": "",
+        "timeout_ms": 0
+    },
+    "dans_endpoint": {
+        "url": "",
+        "timeout_ms": 0
+    },
+    "http_server": {
+        "timeout_ms": 0
+    }
+    "jwt_key": ""
+}
