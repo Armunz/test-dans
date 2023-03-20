@@ -1,6 +1,9 @@
 # test-dans
 Test Dans Multi Pro
 
+## How to Run
+go run test-dans -fpath=<config_file_path>
+
 ## User Table
 username: dwi, password: test123
 <img width="573" alt="Screen Shot 2023-03-20 at 09 45 00" src="https://user-images.githubusercontent.com/36951196/226236887-31c94db4-0164-4e53-ba02-9a7d9c1aa920.png">
