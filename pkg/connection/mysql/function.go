@@ -3,6 +3,8 @@ package mysql
 import (
 	"database/sql"
 	"test-dans/config"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func InitConnection(cfg config.MySQL) (database *sql.DB, err error) {

@@ -1,7 +1,10 @@
 package http
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"sync"
@@ -30,30 +33,27 @@ func New(url string, timeoutMS int) jobs.Repository {
 
 func (j *jobRepository) fillCache() {
 	var err error
-	var client = &http.Client{}
 	var data []model.Job
 
 	log.Println("Starting fill cache job list")
-	request, err := http.NewRequest("GET", j.url, nil)
+	// make GET request
+	response, err := http.Get(j.url)
 	if err != nil {
-		log.Println("[error] failed to build request for get job list, ", err)
-		return
+		fmt.Println(err)
 	}
 
-	response, err := client.Do(request)
+	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		log.Println("[error] failed to get job list, ", err)
-		return
+		log.Println("[error] failed to read response body, ", err)
 	}
-	defer response.Body.Close()
 
-	log.Println("[DEBUG] Response Body: ", response.Body)
-
-	err = json.NewDecoder(response.Body).Decode(&data)
+	buf := bytes.NewBuffer(body)
+	err = json.NewDecoder(buf).Decode(&data)
 	if err != nil {
 		log.Println("[error] failed to parse job list, ", err)
 		return
 	}
+	response.Body.Close()
 
 	if len(data) == 0 {
 		log.Println("[error] job list is empty")
